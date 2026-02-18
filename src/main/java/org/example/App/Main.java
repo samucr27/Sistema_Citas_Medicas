@@ -9,8 +9,6 @@ public class Main {
 
     public static void main(String[] args) {
 
-        // ====== CONSTRUCCIÓN DE CAPAS ======
-
         // Servicio → lógica
         CitaService service = new CitaServiceImpl();
 
