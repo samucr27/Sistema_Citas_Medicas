@@ -1,7 +1,6 @@
 package org.example.App;
 
 import org.example.App.Controller.CitaController;
-import org.example.App.Modelo.EstadoCita;
 import org.example.App.Servicios.CitaService;
 import org.example.App.Servicios.CitaServiceImpl;
 import org.example.App.Vista.CitaView;
@@ -10,34 +9,53 @@ public class Main {
 
     public static void main(String[] args) {
 
-        // Crear capas
+        // ====== CONSTRUCCIÓN DE CAPAS ======
+
+        // Servicio → lógica
         CitaService service = new CitaServiceImpl();
+
+        // Controlador → puente vista-servicio
         CitaController controller = new CitaController(service);
+
+        // Vista → consola
         CitaView view = new CitaView();
 
+        int op;
 
-        // Registrar citas
-        controller.crearCita("Ana Torres", "2026-03-01");
-        controller.crearCita("Luis Perez", "2026-03-02");
-        controller.crearCita("Maria Gomez", "2026-03-03");
+        // Ciclo del menú
+        do {
 
-        // Listar
-        view.mostrarCitas(controller.obtenerCitas());
+            op = view.menu();
 
-        // Cambiar estado
-        controller.actualizarEstado(1, EstadoCita.ATENDIDA);
-        controller.actualizarEstado(2, EstadoCita.CANCELADA);
+            switch (op) {
 
-        // Intento inválido (regla del sistema)
-        controller.actualizarEstado(2, EstadoCita.ATENDIDA);
+                case 1:
+                    // Crear cita usando datos de vista
+                    controller.crearCita(
+                            view.pedirPaciente(),
+                            view.pedirFecha());
+                    break;
 
-        // Listar otra vez
-        view.mostrarCitas(controller.obtenerCitas());
+                case 2:
+                    // Mostrar citas
+                    view.mostrarCitas(
+                            controller.obtenerCitas());
+                    break;
 
-        // Eliminar cita
-        controller.borrarCita(3);
+                case 3:
+                    // Cambiar estado
+                    controller.actualizarEstado(
+                            view.pedirId(),
+                            view.pedirEstado());
+                    break;
 
-        // Lista final
-        view.mostrarCitas(controller.obtenerCitas());
+                case 4:
+                    // Eliminar
+                    controller.borrarCita(
+                            view.pedirId());
+                    break;
+            }
+
+        } while (op != 0); // termina cuando usuario pone 0
     }
 }

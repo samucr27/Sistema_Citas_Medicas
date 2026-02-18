@@ -1,5 +1,7 @@
 package org.example.App.Modelo;
 
+import org.example.App.Modelo.EstadoCita;
+
 public class Cita {
 
     // Variable estática para generar ID automático
@@ -11,6 +13,7 @@ public class Cita {
     private String fecha;
     private EstadoCita estado;
 
+    // Constructor
     public Cita(String paciente, String fecha) {
         // ID automático — regla del ejercicio
         this.id = contador++;
@@ -21,6 +24,8 @@ public class Cita {
         // Toda cita inicia PROGRAMADA
         this.estado = EstadoCita.PROGRAMADA;
     }
+
+    // ===== Getters (lectura de datos) =====
 
     public int getId() {
         return id;
@@ -38,10 +43,12 @@ public class Cita {
         return estado;
     }
 
+    // Setter solo para estado (no se cambia ID ni paciente)
     public void setEstado(EstadoCita estado) {
         this.estado = estado;
     }
 
+    // toString permite imprimir el objeto bonito en consola
     @Override
     public String toString() {
         return "ID: " + id +

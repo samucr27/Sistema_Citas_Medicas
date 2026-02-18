@@ -32,6 +32,7 @@ public class CitaServiceImpl implements CitaService {
 
             if (c.getId() == id) {
 
+                // ===== REGLA DEL EJERCICIO =====
                 // Una cita cancelada NO puede pasar a atendida
                 if (c.getEstado() == EstadoCita.CANCELADA
                         && nuevoEstado == EstadoCita.ATENDIDA) {
